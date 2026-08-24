@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://b1dj0h1qdvitd"]
+
+[ext_resource type="Script" uid="uid://crt6dn7myqu14" path="res://scenes/game/scripts/fan_thing.gd" id="1_wcly2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cs4ly"]
+size = Vector2(90, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h37n4"]
+size = Vector2(60, 300)
+
+[node name="FanThing" type="Node2D" unique_id=998280220]
+script = ExtResource("1_wcly2")
+
+[node name="PhysicalBox" type="StaticBody2D" parent="." unique_id=1885888284]
+
+[node name="PhysicalHitbox" type="CollisionShape2D" parent="PhysicalBox" unique_id=1806885621]
+shape = SubResource("RectangleShape2D_cs4ly")
+debug_color = Color(0.77485657, 0.14544964, 0.9999998, 0.41960785)
+
+[node name="WindAndAir" type="Area2D" parent="." unique_id=1292278492]
+
+[node name="WindAndAirHitbox" type="CollisionShape2D" parent="WindAndAir" unique_id=1307794384]
+position = Vector2(0, -151)
+shape = SubResource("RectangleShape2D_h37n4")
+debug_color = Color(0.7172274, 0.25471008, 0.9999998, 0.41960785)
+
+[connection signal="area_entered" from="WindAndAir" to="." method="_on_wind_and_air_area_entered"]
+[connection signal="body_entered" from="WindAndAir" to="." method="_on_wind_and_air_body_entered"]
+[connection signal="body_exited" from="WindAndAir" to="." method="_on_wind_and_air_body_exited"]

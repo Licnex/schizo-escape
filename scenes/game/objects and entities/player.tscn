@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://boi01a3xni7hl"]
+
+[ext_resource type="Script" uid="uid://bwi3y3kget3nk" path="res://scenes/game/scripts/player.gd" id="1_mf6ic"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2mw1b"]
+
+[node name="Player" type="CharacterBody2D" unique_id=68902206]
+script = ExtResource("1_mf6ic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249329415]
+shape = SubResource("CapsuleShape2D_2mw1b")
+debug_color = Color(9.1448425e-07, 0.65070313, 0.09518888, 0.41960785)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=380996869]
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
