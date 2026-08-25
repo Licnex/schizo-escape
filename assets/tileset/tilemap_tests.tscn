@@ -1,0 +1,27 @@
+[gd_scene format=4 uid="uid://1rs7mbbfeww1"]
+
+[ext_resource type="TileSet" uid="uid://dbcoros6uevgk" path="res://assets/tileset/platforms.tres" id="2_32rk0"]
+[ext_resource type="Texture2D" uid="uid://dtwynf46ghjc2" path="res://assets/character/sketch_for_size.png" id="3_32rk0"]
+
+[node name="tilemaptest" type="Node2D" unique_id=2038715256]
+
+[node name="platforming" type="TileMapLayer" parent="." unique_id=869103474]
+tile_map_data = PackedByteArray("AAACAAEAAQACAAAAAAADAAEAAQACAAMAAAAEAAEAAQACAAMAAAAFAAEAAQACAAMAAAAGAAEAAQACAAMAAAAHAAEAAQACAAAAAAAIAAEAAQACAAMAAAABAAEAAQABAAMAAAAJAAEAAQACAAMAAAAHAAIAAQAAAAEAAAAHAAMAAQAAAAEAAAAKAAEAAQADAAIAAAAKAAAAAQABAAAAAAALAAAAAQADAAMAAAAHAAQAAQAEAAMAAAAGAAQAAQAIAAAAAAAIAAQAAQADAAMAAAAHAAUAAQALAAMAAAAGAAUAAQAIAAMAAAACAAIAAQAAAAEAAAACAAMAAQAJAAAAAAABAAMAAQAIAAAAAAABAAQAAQAIAAEAAAABAAUAAQAIAAMAAAACAAUAAQAJAAMAAAACAAQAAQAJAAIAAAADAAMAAQALAAAAAAADAAQAAQALAAIAAAADAAUAAQALAAMAAAA=")
+tile_set = ExtResource("2_32rk0")
+
+[node name="Label" type="Label" parent="." unique_id=618934695]
+offset_left = 2086.0
+offset_top = -1126.0
+offset_right = 2827.0
+offset_bottom = -947.0
+theme_override_font_sizes/font_size = 64
+text = "How to organize tilesets
+"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=528431017]
+position = Vector2(1319, 236)
+zoom = Vector2(0.21, 0.21)
+
+[node name="SketchForSize" type="Sprite2D" parent="." unique_id=1080654579]
+position = Vector2(1676, -70)
+texture = ExtResource("3_32rk0")
