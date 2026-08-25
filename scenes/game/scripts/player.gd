@@ -1,84 +1,108 @@
+class_name PlayerController
 extends CharacterBody2D
 
+## Emitted on the frame a jump starts.
+signal jumped ## Rn just there for future reference incase someone cooks
+## Emitted on the frame the character touches the floor after being airborne.
+signal landed ## Rn just there for future reference incase someone cooks
 
-const SPEED = 100.0 # the players ground speed
-const AIR_CONTROL_SPEED = 40 #the players speed while in the air.
-const JUMP_VELOCITY = -400.0 #jump speed.
-const MAX_SPEED = 400 #speed cap.
-const WALL_SLIDE_SPEED = 2 #the speed at which the player will fall during a wall jump (only works if velocity.y > 0).
-const WALL_SLIDE_AMOUNT = 600 #amount of wallslides available before touching the ground.
-const WALL_JUMP_VERTICAL_SPEED = 200 #the speed the player will be pushed off the wall with when doing a wall jump.
+@export_group("Run")
+## Top horizontal speed, in pixels per second.
+@export var max_speed: float = 320.0
+## Ground acceleration, in pixels per second squared.
+@export var ground_acceleration: float = 2800.0
+## Ground braking, used when there is no input or when reversing direction.
+@export var ground_deceleration: float = 3400.0
+## Air acceleration. Lower than ground keeps mid-air control deliberate.
+@export var air_acceleration: float = 1900.0
+## Air braking, used when no direction is held.
+@export var air_deceleration: float = 1300.0
 
-var is_wall_sliding = false #tracks whether the player character is wall sliding.
-var wall_slide_counter = WALL_SLIDE_AMOUNT #counter used to determine how many wallslides done before hitting the ground last.
-var do_gravity : bool #a boolean that determines whether gravity is active for the player.
-var is_in_fan = false #checks if the player is in the fan hitbox.
+@export_group("Jump")
+## Jump height at full press, in pixels.
+@export var jump_height: float = 140.0
+## Seconds from takeoff to the top of the jump arc.
+@export var jump_time_to_peak: float = 0.35
+## Seconds from the top of the arc back down to takeoff height.
+## Shorter than the rise reads as weight; equal reads as floaty.
+@export var jump_time_to_fall: float = 0.28
+## Grace window to jump after walking off a ledge, in seconds.
+@export var coyote_time: float = 0.10
+## How early a jump press is remembered before landing, in seconds.
+@export var jump_buffer_time: float = 0.12
+## Multiplier applied to upward speed when jump is released mid-rise.
+## Lower values cut the jump shorter.
+@export_range(0.0, 1.0, 0.05) var jump_cut_factor: float = 0.4
+## Terminal fall speed, in pixels per second.
+@export var max_fall_speed: float = 900.0
 
+var _coyote_left: float = 0.0
+var _buffer_left: float = 0.0
+var _was_on_floor: bool = false
+
+
+## Replaces the current velocity, e.g. with a damage knockback impulse.
+## Kept generic on purpose: the controller knows nothing about damage.
+func apply_knockback(knockback: Vector2) -> void:
+	velocity = knockback
 
 
 func _physics_process(delta: float) -> void:
-	
-	#do gravity function
-	if do_gravity == true:
-		velocity += get_gravity() * delta
-	# Add the gravity.
-	if not is_on_floor() and is_wall_sliding == false:
-		do_gravity = true
-	else:
-		do_gravity = false
-	
-	# Handle on floor jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		
-	# Get the input direction and handle the movement/deceleration.
-	# Vertical movement for if the player is on the ground directly
-	var direction := Input.get_axis("move_left", "move_right")
-	if direction and is_on_floor():
-		velocity.x = (direction * SPEED) + velocity.x
-		velocity.x = clamp(velocity.x,MAX_SPEED * -1,MAX_SPEED)
-	elif is_on_floor():
-		velocity.x = move_toward(velocity.x, 0, SPEED*2)
-		
-	#vertical movement for if the player is in the air
-	if direction and is_on_floor() == false:
-		velocity.x = (direction * AIR_CONTROL_SPEED) + velocity.x
-		velocity.x = clamp(velocity.x,MAX_SPEED * -1,MAX_SPEED)
-	elif is_on_floor() == false :
-		velocity.x = move_toward(velocity.x, 0, 5)
-
-
-
-		#wallslide logic to check for wallsliding
-	if is_on_floor() == false and is_on_wall() and velocity.y <800 and wall_slide_counter > 0 and (get_wall_normal().x *-1) * direction > 0:
-		if is_wall_sliding == false:
-				is_wall_sliding = true
-
-#what it does if it is wall sliding
-	if is_wall_sliding == true:
-		if velocity.y <= 0:
-			do_gravity = true
-			velocity.y = velocity.y + 10
-		else:
-			do_gravity = false
-		velocity.y = (velocity.y + WALL_SLIDE_SPEED)
-
-#wall slide jumping
-	if Input.is_action_just_pressed("jump") and is_wall_sliding:
-		var jump_direction = get_wall_normal()
-		velocity.x = jump_direction.x * WALL_JUMP_VERTICAL_SPEED
-		velocity.y = JUMP_VELOCITY
-
-#making the code stop a wallslide
-	if is_wall_sliding and is_on_wall() == false or Input.is_action_just_pressed("jump") and is_wall_sliding == true:
-		is_wall_sliding = false
-		wall_slide_counter = wall_slide_counter-1
-
-#resetting wall slide counter
-	if is_on_floor():
-		wall_slide_counter = WALL_SLIDE_AMOUNT
-
-
-
-
+	_apply_gravity(delta)
+	_run(Input.get_axis("move_left", "move_right"), delta)
+	_update_jump(delta)
 	move_and_slide()
+	_update_floor_state()
+
+
+func _apply_gravity(delta: float) -> void:
+	var gravity: float = _fall_gravity() if velocity.y > 0.0 else _rise_gravity()
+	velocity.y = minf(velocity.y + gravity * delta, max_fall_speed)
+
+
+func _run(direction: float, delta: float) -> void:
+	var braking: bool = is_zero_approx(direction) or direction * velocity.x < 0.0
+	var rate: float
+	if is_on_floor():
+		rate = ground_deceleration if braking else ground_acceleration
+	else:
+		rate = air_deceleration if braking else air_acceleration
+	velocity.x = move_toward(velocity.x, direction * max_speed, rate * delta)
+
+
+func _update_jump(delta: float) -> void:
+	_coyote_left = maxf(_coyote_left - delta, 0.0)
+	_buffer_left = maxf(_buffer_left - delta, 0.0)
+	if Input.is_action_just_pressed("jump"):
+		_buffer_left = jump_buffer_time
+	if _buffer_left > 0.0 and (is_on_floor() or _coyote_left > 0.0):
+		_buffer_left = 0.0
+		_coyote_left = 0.0
+		velocity.y = -_jump_velocity()
+		jumped.emit()
+	if Input.is_action_just_released("jump") and velocity.y < 0.0:
+		velocity.y *= jump_cut_factor
+
+
+func _update_floor_state() -> void:
+	var on_floor: bool = is_on_floor()
+	if on_floor and not _was_on_floor:
+		landed.emit()
+	# The coyote window opens only when the floor is lost by walking off a
+	# ledge (falling). A jump sets negative velocity, so it never re-arms it.
+	if _was_on_floor and not on_floor and velocity.y >= 0.0:
+		_coyote_left = coyote_time
+	_was_on_floor = on_floor
+
+
+# Plain projectile kinematics: v = 2h/t, g = 2h/t^2.
+func _jump_velocity() -> float:
+	return 2.0 * jump_height / jump_time_to_peak
+
+
+func _rise_gravity() -> float:
+	return 2.0 * jump_height / (jump_time_to_peak * jump_time_to_peak)
+
+
+func _fall_gravity() -> float:
+	return 2.0 * jump_height / (jump_time_to_fall * jump_time_to_fall)
