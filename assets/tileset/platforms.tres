@@ -5,6 +5,7 @@
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_67ggt"]
 texture = ExtResource("1_67ggt")
+margins = Vector2i(0, 1)
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -438,7 +439,7 @@ texture_region_size = Vector2i(256, 256)
 11:3/0 = 0
 
 [resource]
-tile_size = Vector2i(256, 256)
+tile_size = Vector2i(254, 254)
 physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Platforms"
