@@ -23,5 +23,5 @@ position = Vector2(947, -195)
 zoom = Vector2(0.21, 0.21)
 
 [node name="SketchForSize" type="Sprite2D" parent="." unique_id=1080654579]
-position = Vector2(1171, -319)
+position = Vector2(1264, -321)
 texture = ExtResource("3_32rk0")
