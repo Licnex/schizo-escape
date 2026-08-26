@@ -6,6 +6,7 @@ signal jumped ## Rn just there for future reference incase someone cooks
 ## Emitted on the frame the character touches the floor after being airborne.
 signal landed ## Rn just there for future reference incase someone cooks
 
+
 @export_group("Run")
 ## Top horizontal speed, in pixels per second.
 @export var max_speed: float = 320.0
@@ -35,10 +36,20 @@ signal landed ## Rn just there for future reference incase someone cooks
 @export_range(0.0, 1.0, 0.05) var jump_cut_factor: float = 0.4
 ## Terminal fall speed, in pixels per second.
 @export var max_fall_speed: float = 900.0
+## The Speed at which you slide on walls.
+@export var wallslide_speed: float = 100.0
+## The factor for the speed at which you jump away from a wall
+@export var kick_factor: float = 1.0
+
+
+@onready var sprite_2d: Sprite2D = $Sprite2d
+@onready var camera_2d: Camera2D = $Camera2D
+
 
 var _coyote_left: float = 0.0
 var _buffer_left: float = 0.0
 var _was_on_floor: bool = false
+var _is_wall_sliding: bool = false
 
 
 ## Replaces the current velocity, e.g. with a damage knockback impulse.
@@ -47,13 +58,31 @@ func apply_knockback(knockback: Vector2) -> void:
 	velocity = knockback
 
 
+func _ready() -> void:
+	## Scaling everything to the size of the player
+	var s = scale.x *0.5
+	max_speed *= s
+	ground_acceleration *= s
+	air_acceleration *= s
+	ground_deceleration *= s
+	air_deceleration *= s
+	jump_height *= s
+	max_fall_speed *= s
+	camera_2d.zoom *= 1.0/s
+
+
 func _physics_process(delta: float) -> void:
+	var direction = Input.get_axis("move_left", "move_right")
+	if direction == -1:
+		sprite_2d.flip_h = true
+	elif direction == 1:
+		sprite_2d.flip_h = false
 	_apply_gravity(delta)
-	_run(Input.get_axis("move_left", "move_right"), delta)
+	_update_wallslide(delta)
+	_run(direction, delta)
 	_update_jump(delta)
 	move_and_slide()
 	_update_floor_state()
-
 
 func _apply_gravity(delta: float) -> void:
 	var gravity: float = _fall_gravity() if velocity.y > 0.0 else _rise_gravity()
@@ -68,9 +97,27 @@ func _run(direction: float, delta: float) -> void:
 	else:
 		rate = air_deceleration if braking else air_acceleration
 	velocity.x = move_toward(velocity.x, direction * max_speed, rate * delta)
+	if _is_wall_sliding:
+		velocity.y = min(velocity.y, wallslide_speed)
+
+
+func _update_wallslide(delta: float) -> void:
+	if not is_on_floor() and is_on_wall():
+		_is_wall_sliding = true
+	else:
+		_is_wall_sliding = false
 
 
 func _update_jump(delta: float) -> void:
+	## Wall Slide stuff
+	if (_is_wall_sliding and Input.is_action_just_pressed("jump")):
+		velocity.y = -_jump_velocity()
+		velocity.x = get_wall_normal().x * max_fall_speed * kick_factor
+		_buffer_left = 0.0
+		_coyote_left = 0.0
+		jumped.emit()
+		return
+	## Regular jump code
 	_coyote_left = maxf(_coyote_left - delta, 0.0)
 	_buffer_left = maxf(_buffer_left - delta, 0.0)
 	if Input.is_action_just_pressed("jump"):
