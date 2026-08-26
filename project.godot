@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SchizoEscape"
-run/main_scene="uid://y4k52tf4ldnm"
+run/main_scene="uid://bryq7ku7es5l2"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -28,6 +28,8 @@ ProjectUISoundController="*uid://cc37235kj4384"
 
 [display]
 
+window/size/viewport_width=1200
+window/size/viewport_height=700
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

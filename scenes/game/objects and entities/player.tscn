@@ -1,16 +1,30 @@
 [gd_scene format=3 uid="uid://boi01a3xni7hl"]
 
 [ext_resource type="Script" uid="uid://bwi3y3kget3nk" path="res://scenes/game/scripts/player.gd" id="1_mf6ic"]
+[ext_resource type="Texture2D" uid="uid://dtwynf46ghjc2" path="res://assets/character/sketch_for_size.png" id="2_hcucl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2mw1b"]
+radius = 5.0
+height = 42.0
 
 [node name="Player" type="CharacterBody2D" unique_id=68902206]
+scale = Vector2(13, 13)
 script = ExtResource("1_mf6ic")
+jump_cut_factor = 0.5
+wallslide_speed = 600.0
+kick_factor = 0.35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249329415]
+position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_2mw1b")
 debug_color = Color(9.1448425e-07, 0.65070313, 0.09518888, 0.41960785)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=380996869]
+position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="Sprite2d" type="Sprite2D" parent="." unique_id=12936474]
+position = Vector2(1, -6)
+scale = Vector2(0.065, 0.065)
+texture = ExtResource("2_hcucl")
