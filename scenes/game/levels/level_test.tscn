@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bh2710fusg0au"]
 
-[ext_resource type="PackedScene" uid="uid://boi01a3xni7hl" path="res://scenes/game/objects and entities/player.tscn" id="1_yqev8"]
-[ext_resource type="PackedScene" uid="uid://b1dj0h1qdvitd" path="res://scenes/game/objects and entities/fan thing.tscn" id="2_k1or7"]
+[ext_resource type="PackedScene" uid="uid://boi01a3xni7hl" path="res://scenes/game/objects and entities/player.tscn" id="1_13c4g"]
+[ext_resource type="PackedScene" uid="uid://b1dj0h1qdvitd" path="res://scenes/game/objects and entities/fan thing.tscn" id="2_jopbk"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2mw1b"]
 distance = -22.0
@@ -23,9 +23,9 @@ position = Vector2(92, -55)
 position = Vector2(249, 173)
 shape = SubResource("RectangleShape2D_2mw1b")
 
-[node name="Player" parent="." unique_id=68902206 instance=ExtResource("1_yqev8")]
-position = Vector2(-159, -497)
+[node name="Player" parent="." unique_id=68902206 instance=ExtResource("1_13c4g")]
+position = Vector2(-18, -16)
 
-[node name="FanThing" parent="." unique_id=998280220 instance=ExtResource("2_k1or7")]
-position = Vector2(-795, 38)
+[node name="FanThing" parent="." unique_id=998280220 instance=ExtResource("2_jopbk")]
+position = Vector2(-278.00003, -25)
 rotation = 0.36229405
