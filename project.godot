@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SchizoEscape"
-run/main_scene="res://addons/maaacks_game_template/examples/scenes/opening/opening.tscn"
+run/main_scene="uid://y4k52tf4ldnm"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

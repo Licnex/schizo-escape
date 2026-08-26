@@ -19,9 +19,9 @@ text = "How to organize tilesets
 "
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=528431017]
-position = Vector2(1319, 236)
+position = Vector2(947, -195)
 zoom = Vector2(0.21, 0.21)
 
 [node name="SketchForSize" type="Sprite2D" parent="." unique_id=1080654579]
-position = Vector2(1676, -70)
+position = Vector2(2077, -70)
 texture = ExtResource("3_32rk0")
