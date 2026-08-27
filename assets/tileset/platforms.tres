@@ -440,7 +440,8 @@ texture_region_size = Vector2i(256, 256)
 
 [resource]
 tile_size = Vector2i(254, 254)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 5
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Platforms"
 terrain_set_0/terrain_0/color = Color(1, 0, 0, 1)

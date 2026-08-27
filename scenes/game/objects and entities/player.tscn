@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bwi3y3kget3nk" path="res://scenes/game/scripts/player.gd" id="1_mf6ic"]
 [ext_resource type="Texture2D" uid="uid://dtwynf46ghjc2" path="res://assets/character/sketch_for_size.png" id="2_hcucl"]
+[ext_resource type="PackedScene" uid="uid://bgep5f65flwuh" path="res://scenes/game/objects and entities/throwable.tscn" id="2_nhs3q"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2mw1b"]
 radius = 5.0
@@ -9,10 +10,12 @@ height = 42.0
 
 [node name="Player" type="CharacterBody2D" unique_id=68902206]
 scale = Vector2(13, 13)
+collision_mask = 3
 script = ExtResource("1_mf6ic")
 jump_cut_factor = 0.5
 wallslide_speed = 600.0
 kick_factor = 0.35
+throwable_scene = ExtResource("2_nhs3q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249329415]
 position = Vector2(0, -3)

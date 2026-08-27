@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bgep5f65flwuh"]
+
+[ext_resource type="Script" uid="uid://gbwmsaxy0bpd" path="res://scenes/game/scripts/throwable.gd" id="1_kl235"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2mw1b"]
+size = Vector2(100, 100)
+
+[node name="Throwable" type="RigidBody2D" unique_id=416373590]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_kl235")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=176081503]
+shape = SubResource("RectangleShape2D_2mw1b")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1881896171]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=628978240]
+shape = SubResource("RectangleShape2D_2mw1b")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

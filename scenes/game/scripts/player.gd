@@ -41,6 +41,13 @@ signal landed ## Rn just there for future reference incase someone cooks
 ## The factor for the speed at which you jump away from a wall
 @export var kick_factor: float = 1.0
 
+@export_group("throwable")
+#the scene that contains the throwable object
+@export var throwable_scene: PackedScene
+#the speed the throwable will be thrown at
+@export var throwable_speed: float = 600
+#the multiplyer for the thrown objects gravity, used for player scaling.
+@export var throwable_gravity_mult:float = 1
 
 @onready var sprite_2d: Sprite2D = $Sprite2d
 @onready var camera_2d: Camera2D = $Camera2D
@@ -69,6 +76,8 @@ func _ready() -> void:
 	jump_height *= s
 	max_fall_speed *= s
 	camera_2d.zoom *= 1.0/s
+	throwable_speed *= s
+	throwable_gravity_mult *= s
 
 
 func _physics_process(delta: float) -> void:
@@ -100,6 +109,9 @@ func _run(direction: float, delta: float) -> void:
 	if _is_wall_sliding:
 		velocity.y = min(velocity.y, wallslide_speed)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("throw"):
+		throw_object()
 
 func _update_wallslide(delta: float) -> void:
 	if not is_on_floor() and is_on_wall():
@@ -153,3 +165,15 @@ func _rise_gravity() -> float:
 
 func _fall_gravity() -> float:
 	return 2.0 * jump_height / (jump_time_to_fall * jump_time_to_fall)
+
+
+func throw_object():
+	if throwable_scene == null:
+		return
+	var thrown_object = throwable_scene.instantiate()
+	var throw_vector = global_position.direction_to(get_global_mouse_position())
+	var base_throw_velocity = throw_vector * throwable_speed
+	thrown_object.linear_velocity = base_throw_velocity + velocity
+	thrown_object.gravity_scale = thrown_object.gravity_scale * throwable_gravity_mult
+	thrown_object.global_position = global_position
+	get_tree().current_scene.add_child(thrown_object)
