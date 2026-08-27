@@ -10,12 +10,9 @@
 script = ExtResource("2_x31ro")
 level_select_packed_scene = null
 confirm_new_game = true
-game_scene_path = "uid://bh2710fusg0au"
+game_scene_path = "uid://y4k52tf4ldnm"
 options_packed_scene = ExtResource("3_0jpat")
 credits_packed_scene = ExtResource("4_m0ubd")
-
-[node name="TitleLabel" parent="MenuContainer/TitleMargin/TitleContainer" parent_id_path=PackedInt32Array(556427956) index="0" unique_id=359406872]
-text = "SchizoEscape"
 
 [node name="SubTitleLabel" parent="MenuContainer/SubTitleMargin/SubTitleContainer" parent_id_path=PackedInt32Array(930520368) index="0" unique_id=1037003361]
 text = "Trust No One"
