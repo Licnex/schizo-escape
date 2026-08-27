@@ -78,7 +78,7 @@ position = Vector2(947, -195)
 zoom = Vector2(0.21, 0.21)
 
 [node name="SketchForSize" type="Sprite2D" parent="." unique_id=1080654579]
-position = Vector2(1264, -321)
+position = Vector2(265, -1130)
 texture = ExtResource("3_32rk0")
 
 [node name="ExitSign" type="Sprite2D" parent="." unique_id=1678155429]
