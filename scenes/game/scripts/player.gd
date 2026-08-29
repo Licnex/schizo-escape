@@ -57,7 +57,7 @@ var _coyote_left: float = 0.0
 var _buffer_left: float = 0.0
 var _was_on_floor: bool = false
 var _is_wall_sliding: bool = false
-
+var direction : float = 0
 
 ## Replaces the current velocity, e.g. with a damage knockback impulse.
 ## Kept generic on purpose: the controller knows nothing about damage.
@@ -81,7 +81,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var direction = Input.get_axis("move_left", "move_right")
+	direction = Input.get_axis("move_left", "move_right")
 	if direction == -1:
 		sprite_2d.flip_h = true
 	elif direction == 1:
