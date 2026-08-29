@@ -4,66 +4,90 @@
 [ext_resource type="PackedScene" uid="uid://boi01a3xni7hl" path="res://scenes/game/objects and entities/player.tscn" id="2_3u6cc"]
 [ext_resource type="TileSet" uid="uid://dbcoros6uevgk" path="res://assets/tileset/platforms.tres" id="2_22yhj"]
 [ext_resource type="TileSet" uid="uid://dchq5p8ktakky" path="res://assets/tileset/platforms2.tres" id="2_x1c7m"]
+[ext_resource type="Script" uid="uid://4s46e1036rnb" path="res://scenes/game/levels/level_setup.gd" id="3_9f8gp"]
+
+[sub_resource type="Gradient" id="Gradient_kdlgo"]
+offsets = PackedFloat32Array(0, 0.70913464, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0.079051375, 0.079051375, 0.079051375, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k6anf"]
+gradient = SubResource("Gradient_kdlgo")
+width = 100
+height = 100
+fill = 1
+fill_from = Vector2(0.5121528, 0.49479166)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_x1c7m"]
+offsets = PackedFloat32Array(0, 0.69471157)
+colors = PackedColorArray(0.9232132, 0.82357585, 0.82027286, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g4v7s"]
+gradient = SubResource("Gradient_x1c7m")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Environment" id="Environment_g4v7s"]
+background_mode = 3
+tonemap_mode = 1
+tonemap_exposure = 0.51
+glow_enabled = true
+glow_intensity = 1.3
+glow_bloom = 0.08
+glow_blend_mode = 0
 
 [node name="Level1" type="Node2D" unique_id=366839684]
+script = ExtResource("3_9f8gp")
+
+[node name="lighting" type="Node" parent="." unique_id=1621262299]
+
+[node name="PointLight2D3" type="PointLight2D" parent="lighting" unique_id=1344340857]
+position = Vector2(5196, -3919.9995)
+scale = Vector2(200, 149.578)
+energy = 1.46
+shadow_enabled = true
+shadow_filter = 2
+shadow_filter_smooth = 1.7
+texture = SubResource("GradientTexture2D_k6anf")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="lighting" unique_id=471969038]
+color = Color(0.48093897, 0.5996767, 0.72903293, 1)
+
+[node name="Background" type="TileMapLayer" parent="." unique_id=682395134]
+tile_set = ExtResource("2_22yhj")
 
 [node name="Visibility" type="Node" parent="." unique_id=1635368473]
 script = ExtResource("1_x1c7m")
 
 [node name="Fake Tiles" type="TileMapLayer" parent="Visibility" unique_id=1457802829]
 modulate = Color(0.89037347, 0, 0.23910463, 1)
-light_mask = 0
 tile_map_data = PackedByteArray("AAAQAPf/AQACAAMAAAAPAPf/AQACAAMAAAAOAPf/AQACAAMAAAANAPf/AQACAAMAAAARAPf/AQADAAMAAAAMAPf/AQABAAMAAAA=")
 tile_set = ExtResource("2_x1c7m")
 collision_enabled = false
 
 [node name="Invis Tiles" type="TileMapLayer" parent="Visibility" unique_id=506893891]
-visible = false
-modulate = Color(0.34117648, 0.46666667, 1, 1)
+modulate = Color(0.34117648, 0.46666667, 1, 0)
 visibility_layer = 512
 tile_map_data = PackedByteArray("AAAUAO//AQADAAMAAAATAO//AQACAAMAAAASAO//AQACAAMAAAARAO//AQACAAMAAAAQAO//AQABAAMAAAAmAOX/AQABAAAAAAAmAOb/AQAAAAEAAAAmAOf/AQAAAAEAAAAmAOj/AQAAAAIAAAAnAOX/AQACAAMAAAAoAOX/AQACAAMAAAApAOX/AQADAAMAAAAgAOX/AQACAAMAAAAhAOX/AQADAAMAAAAfAOX/AQABAAMAAAA=")
 tile_set = ExtResource("2_22yhj")
 
 [node name="Normal Tiles" type="TileMapLayer" parent="." unique_id=1759952850]
 modulate = Color(0.86598426, 0.47868502, 0.9999986, 1)
-light_mask = 3
 tile_map_data = PackedByteArray("AAACAAEAAQACAAMAAAADAAEAAQACAAMAAAAEAAEAAQACAAMAAAAFAAEAAQACAAMAAAAGAAEAAQACAAMAAAAHAAEAAQACAAMAAAAIAAEAAQACAAMAAAABAAEAAQABAAMAAAAJAAEAAQACAAMAAAAKAAEAAQACAAMAAAAJAPn/AQADAAAAAAAHAPn/AQACAAMAAAAGAPn/AQACAAMAAAAFAPn/AQACAAMAAAAEAPn/AQACAAMAAAADAPn/AQACAAMAAAACAPn/AQACAAMAAAABAPn/AQABAAMAAAAKAPL/AQAAAAEAAAAKAPH/AQAAAAEAAAAKAPD/AQAAAAEAAAAKAO//AQAAAAEAAAAKAO7/AQAAAAEAAAAKAO3/AQAAAAEAAAAKAOz/AQAAAAEAAAAKAOv/AQAAAAEAAAAKAOr/AQAAAAEAAAAKAOn/AQAAAAEAAAA1AO7/AQACAAAAAAA1AO//AQAAAAEAAAA1APD/AQAAAAEAAAA1APH/AQAAAAEAAAA1APL/AQAAAAEAAAA1APP/AQAAAAEAAAA1APT/AQAAAAEAAAA1APX/AQAAAAEAAAA1APb/AQAAAAEAAAA1APf/AQADAAIAAAALAAEAAQACAAMAAAAMAAEAAQACAAMAAAANAAEAAQACAAMAAAAOAAEAAQACAAMAAAAIAPn/AQACAAMAAAAJAPr/AQABAAIAAAAKAPr/AQADAAAAAAAMAPr/AQAAAAEAAAAMAPn/AQAAAAEAAAAMAPj/AQAAAAEAAAAMAPf/AQAAAAEAAAAMAPb/AQAAAAEAAAAMAPX/AQAAAAEAAAAMAPT/AQADAAAAAAAPAAEAAQACAAMAAAAQAAEAAQACAAMAAAARAAEAAQADAAIAAAARAAAAAQAAAAEAAAARAP//AQAAAAEAAAARAP7/AQAAAAEAAAARAP3/AQAAAAEAAAARAPz/AQAAAAEAAAARAPv/AQAAAAEAAAARAPr/AQAAAAEAAAARAPn/AQAAAAEAAAARAPj/AQAAAAEAAAARAPf/AQABAAAAAAASAPf/AQACAAMAAAATAPf/AQACAAMAAAAUAPf/AQACAAMAAAAVAPf/AQACAAMAAAAWAPf/AQACAAMAAAAXAPf/AQACAAMAAAAYAPf/AQACAAMAAAAZAPf/AQACAAMAAAAaAPf/AQACAAMAAAAbAPf/AQACAAMAAAAcAPf/AQACAAMAAAAdAPf/AQACAAMAAAAeAPf/AQACAAMAAAAfAPf/AQACAAMAAAAgAPf/AQACAAMAAAAhAPf/AQACAAMAAAAiAPf/AQACAAMAAAAjAPf/AQACAAMAAAAkAPf/AQACAAMAAAAlAPf/AQACAAMAAAAmAPf/AQACAAMAAAAnAPf/AQACAAMAAAAoAPf/AQACAAMAAAApAPf/AQACAAMAAAAqAPf/AQACAAMAAAArAPf/AQACAAMAAAAsAPf/AQACAAMAAAAtAPf/AQACAAMAAAAuAPf/AQACAAMAAAAvAPf/AQACAAMAAAAwAPf/AQACAAMAAAAxAPf/AQACAAMAAAAyAPf/AQACAAMAAAAzAPf/AQACAAMAAAA0APf/AQACAAMAAAAMAPv/AQADAAIAAAAKAPv/AQABAAIAAAALAPv/AQACAAMAAAAKAPP/AQAAAAEAAAAKAPT/AQABAAIAAAALAPT/AQACAAMAAAAaAOv/AQABAAAAAAAbAOv/AQACAAMAAAAcAOv/AQACAAMAAAAdAOv/AQACAAMAAAAeAOv/AQACAAMAAAAfAOv/AQADAAMAAAAaAOz/AQAAAAIAAAAsAOv/AQABAAMAAAAtAOv/AQADAAAAAAAtAOz/AQABAAIAAAAuAOz/AQADAAAAAAAuAO3/AQABAAIAAAAvAO3/AQADAAAAAAAvAO7/AQABAAIAAAAwAO7/AQACAAMAAAAxAO7/AQACAAMAAAAyAO7/AQACAAMAAAAzAO7/AQACAAMAAAA0AO7/AQACAAMAAAA2AO7/AQACAAMAAAA3AO7/AQACAAMAAAA4AO7/AQADAAMAAAAKAOT/AQAAAAEAAAAKAOD/AQABAAAAAAAKAOH/AQAAAAEAAAAKAOL/AQAAAAEAAAAKAOP/AQAAAAEAAAALAOD/AQACAAMAAAAMAOD/AQACAAMAAAANAOD/AQACAAMAAAAOAOD/AQACAAMAAAAPAOD/AQACAAMAAAAQAOD/AQACAAMAAAARAOD/AQACAAMAAAASAOD/AQACAAMAAAATAOD/AQACAAMAAAAUAOD/AQACAAMAAAAVAOD/AQACAAMAAAAWAOD/AQACAAMAAAAXAOD/AQACAAMAAAAYAOD/AQACAAMAAAAZAOD/AQACAAMAAAAaAOD/AQACAAMAAAAbAOD/AQACAAMAAAAcAOD/AQACAAMAAAAdAOD/AQACAAMAAAAeAOD/AQACAAMAAAAfAOD/AQACAAMAAAAgAOD/AQACAAMAAAAhAOD/AQACAAMAAAAiAOD/AQACAAMAAAAjAOD/AQACAAMAAAAkAOD/AQACAAMAAAAlAOD/AQACAAMAAAAmAOD/AQACAAMAAAAnAOD/AQACAAMAAAAoAOD/AQACAAMAAAApAOD/AQACAAMAAAAqAOD/AQACAAMAAAArAOD/AQACAAMAAAAsAOD/AQACAAMAAAAtAOD/AQACAAMAAAAuAOD/AQACAAMAAAAvAOD/AQACAAMAAAAwAOD/AQACAAMAAAAxAOD/AQACAAMAAAAyAOD/AQACAAMAAAAzAOD/AQACAAMAAAA0AOD/AQACAAMAAAA1AOD/AQADAAAAAAA1AOH/AQAAAAEAAAA1AOL/AQAAAAEAAAA1AOP/AQAAAAEAAAAKAOj/AQAAAAEAAAAKAOf/AQAAAAEAAAAKAOb/AQAAAAEAAAAKAOX/AQAAAAEAAAA1AOT/AQAAAAEAAAA1AOX/AQAAAAEAAAA1AOb/AQAAAAEAAAA1AOf/AQABAAIAAAA2AOf/AQACAAMAAAA3AOf/AQACAAMAAAA4AOf/AQADAAMAAAA=")
 tile_set = ExtResource("2_22yhj")
 
-[node name="Label" type="Label" parent="." unique_id=1938217226]
-offset_left = 6954.0
-offset_top = -4527.0
-offset_right = 12091.0
-offset_bottom = -2670.0
-theme_override_font_sizes/font_size = 270
-text = "purple wall = physical and visible
-blue wall = physical not visible
-red wall = visible but not physical
-
-also the first throwable maybe should be here:"
-metadata/_edit_use_anchors_ = true
-
 [node name="Player" parent="." unique_id=68902206 instance=ExtResource("2_3u6cc")]
-position = Vector2(1401, -112)
+position = Vector2(2701, -144)
+collision_layer = 3
 
-[node name="Label2" type="Label" parent="." unique_id=1312019961]
-offset_left = 3368.0
-offset_top = -3922.0
-offset_right = 6631.0
-offset_bottom = -2815.0
-theme_override_font_sizes/font_size = 160
-text = "the idea is that here would be
- a light that shows the 
-platform above and also the 
-light shines through the fake ceiling below
-"
+[node name="PointLight2D2" type="PointLight2D" parent="Player" unique_id=744912155]
+scale = Vector2(3, 3)
+energy = 0.68
+shadow_enabled = true
+shadow_filter = 2
+shadow_filter_smooth = 1.2
+texture = SubResource("GradientTexture2D_g4v7s")
 
-[node name="Label3" type="Label" parent="." unique_id=343221221]
-offset_left = 8887.0
-offset_top = -7286.0
-offset_right = 9605.0
-offset_bottom = -6869.0
-theme_override_font_sizes/font_size = 100
-text = "there should
- be a light here
-"
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1690085098]
+environment = SubResource("Environment_g4v7s")

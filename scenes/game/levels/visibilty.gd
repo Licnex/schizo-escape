@@ -2,11 +2,5 @@ extends Node
 
 @onready var invis_tiles: TileMapLayer = $"Invis Tiles"
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	invis_tiles.visible = false
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	invis_tiles.modulate.a = 0.0

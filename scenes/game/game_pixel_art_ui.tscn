@@ -41,7 +41,7 @@ level_won_scene = ExtResource("9_e6lot")
 
 [node name="SceneLister" type="Node" parent="LevelManager" unique_id=673614733]
 script = ExtResource("10_g6ih3")
-files = Array[String](["res://scenes/game/levels/level_1.tscn", "res://scenes/game/levels/level_2.tscn", "res://scenes/game/levels/level_3.tscn"])
+files = Array[String](["res://scenes/game/levels/level_1.tscn", "res://scenes/game/levels/level_2.tscn"])
 directory = "res://scenes/game/levels"
 
 [node name="ViewportContainer" type="SubViewportContainer" parent="." unique_id=1831513653]
@@ -54,6 +54,7 @@ stretch = true
 
 [node name="ConfigurableSubViewport" type="SubViewport" parent="ViewportContainer" unique_id=204786699]
 handle_input_locally = false
+use_hdr_2d = true
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
 size = Vector2i(1152, 648)
