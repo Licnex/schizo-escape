@@ -81,12 +81,19 @@
 [ext_resource type="Texture2D" uid="uid://07o2elgaqcwk" path="res://assets/character/animations/animations/skeleton-RUNNING_17.png" id="78_vpf2c"]
 [ext_resource type="Texture2D" uid="uid://d3kq2uttb6irl" path="res://assets/character/animations/animations/skeleton-RUNNING_18.png" id="79_o13xe"]
 [ext_resource type="Texture2D" uid="uid://bcs5oaxmor42r" path="res://assets/character/animations/animations/skeleton-RUNNING_19.png" id="80_aysno"]
+[ext_resource type="Texture2D" uid="uid://bw3jj35jd52ft" path="res://assets/character/animations/animations/skeleton-THROW_0.png" id="81_1jfpn"]
 [ext_resource type="Texture2D" uid="uid://c8irs5fnl6cq1" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_0.png" id="81_7frm1"]
 [ext_resource type="Texture2D" uid="uid://b3a27iyxny4hx" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_1.png" id="82_mvc48"]
+[ext_resource type="Texture2D" uid="uid://bfisde1kmyaqx" path="res://assets/character/animations/animations/skeleton-THROW_1.png" id="82_vu7c5"]
+[ext_resource type="Texture2D" uid="uid://ipcd5w811bky" path="res://assets/character/animations/animations/skeleton-THROW_2.png" id="83_2qb7j"]
 [ext_resource type="Texture2D" uid="uid://cj0j0it8sxn8v" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_2.png" id="83_fervq"]
 [ext_resource type="Texture2D" uid="uid://i84gbl4uftv0" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_3.png" id="84_o0hpa"]
+[ext_resource type="Texture2D" uid="uid://ct7wooplaqnu7" path="res://assets/character/animations/animations/skeleton-THROW_3.png" id="84_rdxoy"]
 [ext_resource type="Texture2D" uid="uid://b5kbm3h52rtvi" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_4.png" id="85_sf41f"]
+[ext_resource type="Texture2D" uid="uid://de06go51rltnh" path="res://assets/character/animations/animations/skeleton-THROW_4.png" id="85_x4xqe"]
+[ext_resource type="Texture2D" uid="uid://cbfhbgyf3pja" path="res://assets/character/animations/animations/skeleton-THROW_5.png" id="86_amdrk"]
 [ext_resource type="Texture2D" uid="uid://cr3palqjhyoxb" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_5.png" id="86_oaf1d"]
+[ext_resource type="Texture2D" uid="uid://bdpi45vonps7r" path="res://assets/character/animations/animations/skeleton-THROW_6.png" id="87_xugt6"]
 [ext_resource type="Texture2D" uid="uid://bnfp4a13favje" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_6.png" id="87_yuy7o"]
 [ext_resource type="Texture2D" uid="uid://duahmpwyfumka" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_7.png" id="88_gf0oa"]
 [ext_resource type="Texture2D" uid="uid://dchdtwoc5d0ew" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_8.png" id="89_juxri"]
@@ -362,6 +369,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("81_1jfpn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_vu7c5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_2qb7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_rdxoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_x4xqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_amdrk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_xugt6")
+}],
+"loop": 0,
+"name": &"throw",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("81_7frm1")
 }, {
 "duration": 1.0,
@@ -419,8 +452,9 @@ libraries/ = SubResource("AnimationLibrary_o4euk")
 modulate = Color(1, 1, 1, 0.34901962)
 scale = Vector2(0.065, 0.065)
 sprite_frames = SubResource("SpriteFrames_jvvh5")
-animation = &"running"
-frame_progress = 0.21302737
+animation = &"throw"
+frame = 6
+frame_progress = 1.0
 script = ExtResource("90_v30up")
 controller = NodePath("..")
 

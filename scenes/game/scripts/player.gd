@@ -5,6 +5,7 @@ extends CharacterBody2D
 signal jumped ## Rn just there for future reference incase someone cooks
 ## Emitted on the frame the character touches the floor after being airborne.
 signal landed ## Rn just there for future reference incase someone cooks
+signal threw
 
 
 @export_group("Run")
@@ -112,6 +113,7 @@ func _run(direction: float, delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("throw"):
 		throw_object()
+		
 
 func _update_wallslide(delta: float) -> void:
 	if not is_on_floor() and is_on_wall():
@@ -170,6 +172,7 @@ func _fall_gravity() -> float:
 func throw_object():
 	if throwable_scene == null:
 		return
+	emit_signal("threw")
 	var thrown_object = throwable_scene.instantiate()
 	var throw_vector = global_position.direction_to(get_global_mouse_position())
 	var base_throw_velocity = throw_vector * throwable_speed
