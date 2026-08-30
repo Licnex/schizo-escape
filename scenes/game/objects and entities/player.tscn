@@ -434,6 +434,7 @@ jump_cut_factor = 0.5
 wallslide_speed = 600.0
 kick_factor = 0.35
 throwable_scene = ExtResource("2_nhs3q")
+throwable_speed = 900.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249329415]
 position = Vector2(0, -3)

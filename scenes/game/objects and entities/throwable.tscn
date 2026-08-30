@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bgep5f65flwuh"]
 
 [ext_resource type="Script" uid="uid://gbwmsaxy0bpd" path="res://scenes/game/scripts/throwable.gd" id="1_kl235"]
+[ext_resource type="Texture2D" uid="uid://bp8rgya2pn1nm" path="res://assets/props/pill.png" id="2_kl235"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2mw1b"]
 size = Vector2(100, 100)
@@ -10,9 +11,6 @@ collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_kl235")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=176081503]
-shape = SubResource("RectangleShape2D_2mw1b")
-
 [node name="Area2D" type="Area2D" parent="." unique_id=1881896171]
 collision_layer = 4
 collision_mask = 2
@@ -20,4 +18,27 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=628978240]
 shape = SubResource("RectangleShape2D_2mw1b")
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1731152692]
+texture = ExtResource("2_kl235")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1941575195]
+emitting = false
+amount = 20
+texture = ExtResource("2_kl235")
+lifetime = 1.03
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+initial_velocity_min = 191.0
+initial_velocity_max = 441.64
+linear_accel_min = -100.0
+linear_accel_max = -100.0
+angle_min = -720.0
+scale_amount_min = 0.15
+scale_amount_max = 0.45
+color = Color(0.93333334, 0.7921569, 0.7372549, 0.42745098)
+hue_variation_min = 0.05
+hue_variation_max = 0.15
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="finished" from="CPUParticles2D" to="." method="_on_cpu_particles_2d_finished"]
