@@ -52,6 +52,7 @@ signal threw
 
 @onready var sprite_2d: Sprite2D = $Sprite2d
 @onready var camera_2d: Camera2D = $Camera2D
+@onready var throw_marker: Marker2D = $throw_marker
 
 
 var _coyote_left: float = 0.0
@@ -178,5 +179,5 @@ func throw_object():
 	var base_throw_velocity = throw_vector * throwable_speed
 	thrown_object.linear_velocity = base_throw_velocity + velocity
 	thrown_object.gravity_scale = thrown_object.gravity_scale * throwable_gravity_mult
-	thrown_object.global_position = global_position
+	thrown_object.global_position = throw_marker.global_position
 	get_tree().current_scene.add_child(thrown_object)

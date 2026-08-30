@@ -463,3 +463,9 @@ visible = false
 position = Vector2(1, -6)
 scale = Vector2(0.065, 0.065)
 texture = ExtResource("2_hcucl")
+
+[node name="throw_marker" type="Marker2D" parent="." unique_id=567851414]
+position = Vector2(0.30769232, -12.846154)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1977477902]
+visible = false
