@@ -98,6 +98,7 @@
 [ext_resource type="Texture2D" uid="uid://duahmpwyfumka" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_7.png" id="88_gf0oa"]
 [ext_resource type="Texture2D" uid="uid://dchdtwoc5d0ew" path="res://assets/character/animations/animations/skeleton-WALL_SLIDE_8.png" id="89_juxri"]
 [ext_resource type="Script" uid="uid://bqhol74i84gvi" path="res://scenes/game/objects and entities/animations.gd" id="90_v30up"]
+[ext_resource type="Texture2D" uid="uid://xmbt33go8rpu" path="res://assets/character/drops/small_drop.png" id="99_vu7c5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2mw1b"]
 radius = 5.0
@@ -434,7 +435,6 @@ jump_cut_factor = 0.5
 wallslide_speed = 600.0
 kick_factor = 0.35
 throwable_scene = ExtResource("2_nhs3q")
-throwable_speed = 900.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1249329415]
 position = Vector2(0, -3)
@@ -468,5 +468,24 @@ texture = ExtResource("2_hcucl")
 [node name="throw_marker" type="Marker2D" parent="." unique_id=567851414]
 position = Vector2(0.30769232, -12.846154)
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1977477902]
-visible = false
+[node name="spit_particles" type="CPUParticles2D" parent="." unique_id=1977477902]
+position = Vector2(2.5384617, -12)
+emitting = false
+amount = 4
+texture = ExtResource("99_vu7c5")
+lifetime = 6.26
+one_shot = true
+speed_scale = 6.34
+explosiveness = 1.0
+randomness = 0.63
+emission_shape = 1
+emission_sphere_radius = 4.55
+direction = Vector2(800, 0)
+spread = 120.0
+gravity = Vector2(0, 750)
+angular_velocity_min = 60.0
+angular_velocity_max = 120.0
+linear_accel_max = 0.55
+angle_min = -260.0
+angle_max = -60.0
+scale_amount_max = 1.5
